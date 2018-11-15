@@ -19,7 +19,6 @@ public abstract class Game implements Runnable, Observable {
 	public Game(int nbMaxTours) {
 		nbToursMAX=nbMaxTours;
 		setNbTours(0);
-		nomLabyrinthe = "";
 
 		//temporaire
 		partieFinie=false;
@@ -43,15 +42,7 @@ public abstract class Game implements Runnable, Observable {
 	public abstract void intializeGame() throws Exception;
 	public abstract void takeTurn();
 	public abstract void gameOver();
-	
-	//utile seulement pour le jeu PacMan
-	public String nomLabyrinthe;
-	
-	public void setNomLaby(String nouvNom)
-	{
-		nomLabyrinthe = nouvNom;
-	}
-	
+		
 	/////////////////////////////////////
 	
 	/**

@@ -26,13 +26,14 @@ import javax.swing.event.ChangeListener;
 import model.Game;
 import model.Maze;
 import model.Observateur;
+import model.PacmanGame;
 
 import controller.ControleurGame;
 
 
 public class View implements Observateur{
 
-	private Game jeu;
+	private PacmanGame jeu;
 	private ControleurGame controleur;
 	
 	
@@ -57,7 +58,7 @@ public class View implements Observateur{
 	private JFrame AffichageJeu;
 	
 
-	public View(Game game, ControleurGame controler)
+	public View(PacmanGame game, ControleurGame controler)
 	{
 		this.controleur = controler;		
 		this.jeu = game;
@@ -175,15 +176,7 @@ public class View implements Observateur{
 		AffichageJeu.setLocation(400,200);
 		//Termine le processus lorsqu'on clique sur la croix rouge
 		AffichageJeu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		try {
-			lab = new Maze("./layouts/bigCorners.lay");
-			ecranJeu = new PanelPacmanGame(lab);
-			AffichageJeu.setContentPane(ecranJeu);
-		} catch (Exception e1) {
-			System.out.println("Impossible de charger le premier laby, du coup tout est cassé");
-			e1.printStackTrace();
-		}				
+	
 
 		//Et enfin, la rendre visible   
 		AffichageJeu.setAlwaysOnTop(true);
@@ -238,8 +231,17 @@ public class View implements Observateur{
 	 */
 	public void actualiser()
 	{
-		System.out.println("Actualisation de l'affichage");
-		compteurTours.setText("Tour: " + jeu.getNbTours());		
+		System.out.println("ICI");
+		try {
+			lab = jeu.getLaby();
+			ecranJeu = new PanelPacmanGame(lab);
+			AffichageJeu.setContentPane(ecranJeu);
+			AffichageJeu.repaint();
+			AffichageJeu.setVisible(true);
+		} catch (Exception e1) {
+			System.out.println("Impossible de charger le labyrinthe");
+			e1.printStackTrace();
+		}		
 	}
 
 	public void disableInit()

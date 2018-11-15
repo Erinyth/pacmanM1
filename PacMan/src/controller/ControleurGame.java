@@ -24,45 +24,47 @@ public class ControleurGame implements ControleurAvance{
 
 	public void start() {
 		etatJeu.launch();
-		
+
 		affichagePartie.disableRun();
 		affichagePartie.enablePause();
 		affichagePartie.enableStep();
 		affichagePartie.enableInit();
-		
+
 	}
 
 	public void init() throws Exception {
-		etatJeu.stop();
-		etatJeu.init();
-		
-		affichagePartie.disableInit();
-		affichagePartie.enableRun();
-		affichagePartie.enablePause();
-		affichagePartie.enableStep();
+		if (etatJeu.getNomLaby() != null)	//On ne fera rien si aucun laby n'a été choisi
+		{
+			etatJeu.stop();
+			etatJeu.init();
+
+			affichagePartie.disableInit();
+			affichagePartie.enableRun();
+			affichagePartie.enablePause();
+			affichagePartie.enableStep();
+		}
 	}
-	
+
 	public void pause(){
 		etatJeu.stop();
-		
+
 		affichagePartie.disablePause();
 		affichagePartie.enableRun();
 		affichagePartie.enableInit();
 		affichagePartie.enableStep();
-		
+
 	}
-	
+
 	public void receptionSlider(int valeurSlider)
 	{
 		etatJeu.setTPS(valeurSlider);
 	}
-	
+
 	public void receptionNouveauLaby(String chemin)
 	{
 		System.out.println(chemin);
 		try {
 			etatJeu.setNomLaby(chemin);
-			etatJeu.intializeGame();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
