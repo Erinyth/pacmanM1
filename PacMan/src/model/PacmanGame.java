@@ -16,6 +16,7 @@ public class PacmanGame extends Game {
 	public void ajouterAgents()
 	{
 		int nbPac = labyrinthe.getInitNumberOfPacmans();
+
 		ArrayList<PositionAgent> listePosPac = labyrinthe.getPacman_start();
 		for (int i=0; i<nbPac; i++)
 		{
@@ -25,7 +26,7 @@ public class PacmanGame extends Game {
 		
 		int nbFan = labyrinthe.getInitNumberOfGhosts();
 		ArrayList<PositionAgent> listePosFan = labyrinthe.getGhosts_start();
-		for (int i=0; i<nbPac; i++)
+		for (int i=0; i<nbFan; i++)
 		{
 			Agent pac = new Agent(listePosFan.get(i),true);
 			listeFantomes.add(pac);

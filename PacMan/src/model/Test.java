@@ -4,9 +4,10 @@ import controller.ControleurGame;
 
 public class Test {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		
-		SimpleGame jeuPacman = new SimpleGame(500);
+		String cheminInitial = "./layouts/bigCorners.lay";
+		PacmanGame jeuPacman = new PacmanGame(500,cheminInitial);
 		ControleurGame controleurJeu = new ControleurGame(jeuPacman);
 		
 		

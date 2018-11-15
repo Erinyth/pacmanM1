@@ -1,14 +1,15 @@
 package controller;
 import model.Game;
+import model.PacmanGame;
 import vue.View;
 
 
 public class ControleurGame implements ControleurAvance{
 
-	private Game etatJeu;
+	private PacmanGame etatJeu;
 	private View affichagePartie;
 
-	public ControleurGame(Game gameState) {
+	public ControleurGame(PacmanGame gameState) {
 		this.etatJeu = gameState;
 		affichagePartie = new View(etatJeu, this);
 	}
