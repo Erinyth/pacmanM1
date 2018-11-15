@@ -39,8 +39,9 @@ public class View implements Observateur{
 	//Utilitaires
 	private JMenuBar menuBar;
 	private JMenu fichier, aPropos;
-	private JMenuItem open;	
+	private JMenuItem open, mi_aboutUs;	
 	private JFileChooser fileChooser;
+	private PopUpView aboutUs;
 
 	//Fenêtre commande
 	private JFrame AffichageCommandes;
@@ -190,31 +191,46 @@ public class View implements Observateur{
 		
 		// Barre de menus et sélection des fichiers
 		menuBar = new JMenuBar();
-		
-			fichier = new JMenu("Fichier");
-			menuBar.add(fichier);
-				
-				open = new JMenuItem("Ouvrir...");
-				open.addActionListener(new ActionListener() 
+
+		fichier = new JMenu("Fichier");
+		menuBar.add(fichier);
+
+		open = new JMenuItem("Ouvrir...");
+		open.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				fileChooser = new JFileChooser();
+				int returnVal = fileChooser.showOpenDialog(null);
+				if (returnVal == JFileChooser.APPROVE_OPTION)
 				{
-					public void actionPerformed(ActionEvent e)
-					{
-						fileChooser = new JFileChooser();
-						int returnVal = fileChooser.showOpenDialog(null);
-						if (returnVal == JFileChooser.APPROVE_OPTION)
-						{
-							File file = fileChooser.getSelectedFile();
-							String filePath = file.getAbsolutePath();	
-							controleur.receptionNouveauLaby(filePath);
-						}
-					}
-				});
-				fichier.add(open);
-			
-			aPropos = new JMenu("A propos");
-			menuBar.add(aPropos);
-			
-			AffichageJeu.setJMenuBar(menuBar);
+					File file = fileChooser.getSelectedFile();
+					String filePath = file.getAbsolutePath();	
+					controleur.receptionNouveauLaby(filePath);
+				}
+			}
+		});
+		fichier.add(open);
+
+		aPropos = new JMenu("A propos");
+		menuBar.add(aPropos);
+
+		mi_aboutUs = new JMenuItem("Nous concernant...");
+		mi_aboutUs.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				if(e.getSource() == mi_aboutUs)
+				{
+					aboutUs = new PopUpView();
+					aboutUs.setModal(true);
+					aboutUs.setVisible(true);
+				}
+			}
+		});
+		aPropos.add(mi_aboutUs);
+
+		AffichageJeu.setJMenuBar(menuBar);
 	}
 
 	/**
@@ -265,6 +281,5 @@ public class View implements Observateur{
 	{
 		boutonRun.setEnabled(true);
 	}
-	
 	
 }
