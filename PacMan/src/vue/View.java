@@ -32,27 +32,28 @@ import controller.ControleurGame;
 
 public class View implements Observateur{
 
-	//temporaire
-	//JLabel affichageInfoJeu;
-	
-	JLabel compteurTours;
-	
-	JMenuBar menuBar;
-	JMenu fichier, aPropos;
-	JMenuItem open;
-	
-	JFileChooser fileChooser;
-
 	private Game jeu;
 	private ControleurGame controleur;
+	
+	
+	//Utilitaires
+	private JMenuBar menuBar;
+	private JMenu fichier, aPropos;
+	private JMenuItem open;	
+	private JFileChooser fileChooser;
 
-	JFrame AffichageCommandes;
-	JFrame AffichageJeu;
-
-	JButton boutonInit;
-	JButton boutonPause;
-	JButton boutonRun;
-	JButton boutonStep;
+	//Fenêtre commande
+	private JFrame AffichageCommandes;
+	private JLabel compteurTours;
+	private JButton boutonInit;
+	private JButton boutonPause;
+	private JButton boutonRun;
+	private JButton boutonStep;
+	
+	//Interface jeu
+	private Maze lab;
+	private PanelPacmanGame ecranJeu;
+	private JFrame AffichageJeu;
 	
 
 	public View(Game game, ControleurGame controler)
@@ -174,18 +175,10 @@ public class View implements Observateur{
 		//Termine le processus lorsqu'on clique sur la croix rouge
 		AffichageJeu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
-		//Label		
-		// TOUT BOUGER POUR PERMETTRE DE LES CHANGER
-		Maze lab;
-		PanelPacmanGame ecranJeu;
 		try {
 			lab = new Maze("./layouts/bigCorners.lay");
 			ecranJeu = new PanelPacmanGame(lab);
-			JPanel PanneauJeu = new JPanel();
 			AffichageJeu.setContentPane(ecranJeu);
-			GridLayout LayoutJeu = new GridLayout(1,1);
-			PanneauJeu.setLayout(LayoutJeu);
 		} catch (Exception e1) {
 			System.out.println("Impossible de charger le premier laby, du coup tout est cassé");
 			e1.printStackTrace();
