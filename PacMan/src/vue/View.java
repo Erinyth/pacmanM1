@@ -1,14 +1,9 @@
 package vue;
 
-import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.FileNotFoundException;
-
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,7 +18,6 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import model.Game;
 import model.Maze;
 import model.Observateur;
 import model.PacmanGame;
@@ -87,6 +81,7 @@ public class View implements Observateur{
 			public void actionPerformed(ActionEvent evenement){
 				try {
 					controleur.init();
+					chargementLabyrinthe();
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -229,13 +224,39 @@ public class View implements Observateur{
 	/**
 	 * Methode d'interface
 	 */
-	public void actualiser()
+
+	@Override
+	public void actualiser() {
+		for (int i=0; i< this.ecranJeu.getPacmans_pos().size();i++)
+		{
+			for (int j=0; j<this.jeu.getListePacman().size();j++)
+			{
+				 this.ecranJeu.getPacmans_pos().set(i, this.jeu.getListePacman().get(j).getPositionAgent());
+			}
+		}
+		for (int i=0; i< this.ecranJeu.getGhosts_pos().size();i++)
+		{
+			for (int j=0; j<this.jeu.getListeFantomes().size();j++)
+			{
+				 this.ecranJeu.getGhosts_pos().set(i, this.jeu.getListeFantomes().get(j).getPositionAgent());
+			}
+		}
+		
+		System.out.println("MAJ");
+		lab = jeu.getLaby();
+		ecranJeu = new PanelPacmanGame(lab);
+		AffichageJeu.setContentPane(ecranJeu);
+		AffichageJeu.repaint();
+		AffichageJeu.setVisible(true);
+	}
+	
+	public void chargementLabyrinthe()
 	{
-		System.out.println("ICI");
 		try {
 			lab = jeu.getLaby();
 			ecranJeu = new PanelPacmanGame(lab);
 			AffichageJeu.setContentPane(ecranJeu);
+			AffichageJeu.setSize(lab.getSizeX()*20, lab.getSizeY()*20);
 			AffichageJeu.repaint();
 			AffichageJeu.setVisible(true);
 		} catch (Exception e1) {
@@ -282,6 +303,5 @@ public class View implements Observateur{
 	public void enableRun()
 	{
 		boutonRun.setEnabled(true);
-	}
-	
+	}	
 }

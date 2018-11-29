@@ -39,4 +39,19 @@ public class AgentAction
             vy=0;
         }
     }
+    
+    public int getVX()
+    {
+    	return vx;
+    }
+    
+    public int getVY()
+    {
+    	return vy;
+    }
+    
+    public int getDir()
+    {
+    	return direction;
+    }
 }

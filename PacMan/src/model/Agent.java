@@ -31,7 +31,6 @@ public class Agent
 		//this.peutManger = peutManger;
 	}
 
-
 	public boolean isTypePacman() {
 		return typeAgent;
 	}
@@ -39,7 +38,17 @@ public class Agent
 	public void setTypeAgent(boolean typeAgent) {
 		this.typeAgent = typeAgent;
 	}
+	
+	public PositionAgent getPositionAgent()
+	{
+		return pos;
+	}
 
+	public void setPos(PositionAgent nPos)
+	{
+		this.pos = nPos;
+	}
+	
 	/*public boolean getPeutManger() {
 		return peutManger;
 	}
