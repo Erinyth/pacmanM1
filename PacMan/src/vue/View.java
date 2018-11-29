@@ -29,8 +29,8 @@ public class View implements Observateur{
 
 	private PacmanGame jeu;
 	private ControleurGame controleur;
-	
-	
+
+
 	//Utilitaires
 	private JMenuBar menuBar;
 	private JMenu fichier, aPropos;
@@ -45,12 +45,12 @@ public class View implements Observateur{
 	private JButton boutonPause;
 	private JButton boutonRun;
 	private JButton boutonStep;
-	
+
 	//Interface jeu
 	private Maze lab;
 	private PanelPacmanGame ecranJeu;
 	private JFrame AffichageJeu;
-	
+
 
 	public View(PacmanGame game, ControleurGame controler)
 	{
@@ -75,7 +75,7 @@ public class View implements Observateur{
 		Icon icon_pause = new ImageIcon("icon_pause.png");
 		Icon icon_run = new ImageIcon("icon_run.png");
 		Icon icon_step = new ImageIcon("icon_step.png");
-		
+
 		boutonInit = new JButton(icon_restart);
 		boutonInit.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evenement){
@@ -88,16 +88,16 @@ public class View implements Observateur{
 				}
 			}
 		});		
-		
-	    boutonPause = new JButton(icon_pause);
+
+		boutonPause = new JButton(icon_pause);
 		boutonPause.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evenement){
 				controleur.pause();
 			}
 		});
 		boutonPause.setEnabled(false);
-		
-		
+
+
 		boutonRun = new JButton(icon_run);
 		boutonRun.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evenement){
@@ -106,7 +106,7 @@ public class View implements Observateur{
 		});
 		boutonRun.setEnabled(false);
 
-		
+
 		boutonStep = new JButton(icon_step);
 		boutonStep.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evenement){
@@ -114,20 +114,20 @@ public class View implements Observateur{
 			}
 		});
 		boutonStep.setEnabled(false);
-		
-		
+
+
 		//Slider
 		final JSlider tourParSeconde = new JSlider(JSlider.HORIZONTAL, 1, 10, 1);
-			tourParSeconde.addChangeListener(new ChangeListener() {
-				public void stateChanged(ChangeEvent event)
-				{
-					int valeur = tourParSeconde.getValue();
-					controleur.receptionSlider(valeur);
-				}
-			});
-			tourParSeconde.setMajorTickSpacing(1);
-			tourParSeconde.setPaintTicks(true);
-			tourParSeconde.setPaintLabels(true);
+		tourParSeconde.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent event)
+			{
+				int valeur = tourParSeconde.getValue();
+				controleur.receptionSlider(valeur);
+			}
+		});
+		tourParSeconde.setMajorTickSpacing(1);
+		tourParSeconde.setPaintTicks(true);
+		tourParSeconde.setPaintLabels(true);
 
 		//Label
 		compteurTours = new JLabel("Tour: 0");
@@ -171,12 +171,12 @@ public class View implements Observateur{
 		AffichageJeu.setLocation(400,200);
 		//Termine le processus lorsqu'on clique sur la croix rouge
 		AffichageJeu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	
+
 
 		//Et enfin, la rendre visible   
 		AffichageJeu.setAlwaysOnTop(true);
 		AffichageJeu.setVisible(true);
-		
+
 		// Barre de menus et sélection des fichiers
 		menuBar = new JMenuBar();
 
@@ -188,12 +188,13 @@ public class View implements Observateur{
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				fileChooser = new JFileChooser();
+				fileChooser = new JFileChooser("./layouts");
 				int returnVal = fileChooser.showOpenDialog(null);
 				if (returnVal == JFileChooser.APPROVE_OPTION)
 				{
 					File file = fileChooser.getSelectedFile();
 					String filePath = file.getAbsolutePath();	
+					System.out.println(filePath);
 					controleur.receptionNouveauLaby(filePath);
 				}
 			}
@@ -231,25 +232,28 @@ public class View implements Observateur{
 		{
 			for (int j=0; j<this.jeu.getListePacman().size();j++)
 			{
-				 this.ecranJeu.getPacmans_pos().set(i, this.jeu.getListePacman().get(j).getPositionAgent());
+				this.ecranJeu.getPacmans_pos().clear();
+				this.ecranJeu.getPacmans_pos().add(this.jeu.getListePacman().get(j).getPositionAgent());
 			}
 		}
 		for (int i=0; i< this.ecranJeu.getGhosts_pos().size();i++)
 		{
 			for (int j=0; j<this.jeu.getListeFantomes().size();j++)
 			{
-				 this.ecranJeu.getGhosts_pos().set(i, this.jeu.getListeFantomes().get(j).getPositionAgent());
+				this.ecranJeu.getGhosts_pos().clear();
+				this.ecranJeu.getGhosts_pos().add(this.jeu.getListeFantomes().get(j).getPositionAgent());
 			}
 		}
+
+		System.out.println("DEBUG: " + ecranJeu.getPacmans_pos().size());
 		
-		System.out.println("MAJ");
 		lab = jeu.getLaby();
 		ecranJeu = new PanelPacmanGame(lab);
 		AffichageJeu.setContentPane(ecranJeu);
 		AffichageJeu.repaint();
 		AffichageJeu.setVisible(true);
 	}
-	
+
 	public void chargementLabyrinthe()
 	{
 		try {
@@ -269,37 +273,37 @@ public class View implements Observateur{
 	{
 		boutonInit.setEnabled(false);
 	}
-	
+
 	public void enableInit()
 	{
 		boutonInit.setEnabled(true);
 	}
-	
+
 	public void disablePause()
 	{
 		boutonPause.setEnabled(false);
 	}
-	
+
 	public void enablePause()
 	{
 		boutonPause.setEnabled(true);
 	}
-	
+
 	public void disableStep()
 	{
 		boutonStep.setEnabled(false);
 	}
-	
+
 	public void enableStep()
 	{
 		boutonStep.setEnabled(true);
 	}
-	
+
 	public void disableRun()
 	{
 		boutonRun.setEnabled(false);
 	}
-	
+
 	public void enableRun()
 	{
 		boutonRun.setEnabled(true);

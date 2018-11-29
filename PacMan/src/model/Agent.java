@@ -7,28 +7,21 @@ public class Agent
 	PositionAgent pos;
 	
 	// 1 représente Pacman, 0 les fantômes
-	boolean typeAgent; 
-	
-	/*
-	 * 1 pour oui
-	 * 0 pour non
-	 * variables représentant si l'agent a peut manger l'agent b
-	 * ne concerne pas les pacGum non les cerises.
-	 */
-	//boolean peutManger;
-	
-	public Agent(int posX, int posY, boolean typeAgent/*, boolean peutManger*/)
+	boolean typeAgent;
+	boolean mort;
+	Etat etat;
+		
+	public Agent(int posX, int posY, boolean typeAgent)
 	{
 		this.pos = new PositionAgent(posX, posY, Maze.NORTH);
 		this.typeAgent = typeAgent;
-		//this.peutManger = peutManger;
+		this.mort = false;
 	}
 	
-	public Agent(PositionAgent posAg, boolean typeAgent/*, boolean peutManger*/)
+	public Agent(PositionAgent posAg, boolean typeAgent)
 	{
 		this.pos = posAg;
 		this.typeAgent = typeAgent;
-		//this.peutManger = peutManger;
 	}
 
 	public boolean isTypePacman() {
@@ -49,11 +42,14 @@ public class Agent
 		this.pos = nPos;
 	}
 	
-	/*public boolean getPeutManger() {
-		return peutManger;
+	public boolean estMort()
+	{
+		return this.mort;
 	}
-
-	public void setPeutManger(boolean peutManger) {
-		this.peutManger = peutManger;
-	}*/
+	
+	public void setMort()
+	{
+		this.mort = true;
+	}
+	
 }

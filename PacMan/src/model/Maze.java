@@ -189,6 +189,18 @@ public class Maze implements Serializable{
 		this.ghosts_start = ghosts_start;
 	}
 	
+	/******************* Règles ****************************/
+	public boolean deplacementAutorise(Agent ag, AgentAction agA)
+	{
+		int nouvX = ag.getPositionAgent().getX() + agA.getVX();
+		int nouvY = ag.getPositionAgent().getY() + agA.getVY();
+
+		if (this.isWall(nouvX, nouvY))
+			return false;
+		else
+			return true;
+	}
+	
 	
 }
 
